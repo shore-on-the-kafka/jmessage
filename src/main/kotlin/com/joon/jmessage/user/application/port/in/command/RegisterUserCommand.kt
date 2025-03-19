@@ -1,8 +1,5 @@
 package com.joon.jmessage.user.application.port.`in`.command
 
-import com.joon.jmessage.message.application.exception.UserException
-import com.joon.jmessage.message.application.port.`in`.command.SendMessageCommand
-
 data class RegisterUserCommand(
     val name: String,
     val email: String,
