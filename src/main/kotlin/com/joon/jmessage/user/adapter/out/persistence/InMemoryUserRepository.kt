@@ -5,16 +5,25 @@ import com.joon.jmessage.user.application.port.out.GetUserRepository
 import com.joon.jmessage.user.application.port.out.RegisterUserRepository
 import com.joon.jmessage.user.domain.User
 import com.joon.jmessage.user.domain.UserId
+import jakarta.annotation.PostConstruct
+import org.springframework.security.crypto.password.PasswordEncoder
 import org.springframework.stereotype.Repository
 import java.time.Instant
 
 @Repository
 class InMemoryUserRepository(
-    private val userIdGenerator: UserIdGenerator
+    private val userIdGenerator: UserIdGenerator,
+    private val passwordEncoder: PasswordEncoder
 ) : RegisterUserRepository,
     GetUserRepository
 {
     private val users = mutableMapOf<UserId, User>()
+
+    @PostConstruct
+    fun setUp() {
+        val userId = UserId("USER-dummy")
+        users[userId] = User(userId, "dummy", "dummy@email.com", passwordEncoder.encode("dummy"), Instant.now())
+    }
 
     override fun registerUser(name: String, email: String, password: String): UserId {
         val userId = userIdGenerator.getNewUserId()

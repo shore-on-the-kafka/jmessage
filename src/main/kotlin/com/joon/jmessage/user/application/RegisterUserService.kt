@@ -1,10 +1,10 @@
 package com.joon.jmessage.user.application
 
-import com.joon.jmessage.user.application.internal.PasswordEncoder
 import com.joon.jmessage.user.application.port.`in`.RegisterUserUseCase
 import com.joon.jmessage.user.application.port.`in`.command.RegisterUserCommand
 import com.joon.jmessage.user.application.port.out.RegisterUserRepository
 import com.joon.jmessage.user.domain.UserId
+import org.springframework.security.crypto.password.PasswordEncoder
 import org.springframework.stereotype.Service
 
 @Service

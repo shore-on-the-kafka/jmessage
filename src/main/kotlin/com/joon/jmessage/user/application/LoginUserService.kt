@@ -1,12 +1,11 @@
 package com.joon.jmessage.user.application
 
-import com.joon.jmessage.user.adapter.out.persistence.InMemoryUserRepository
 import com.joon.jmessage.user.application.exception.UserException
-import com.joon.jmessage.user.application.internal.PasswordEncoder
 import com.joon.jmessage.user.application.port.`in`.LoginUserUseCase
 import com.joon.jmessage.user.application.port.`in`.command.LoginUserCommand
 import com.joon.jmessage.user.application.port.out.GetUserRepository
 import com.joon.jmessage.user.domain.UserId
+import org.springframework.security.crypto.password.PasswordEncoder
 import org.springframework.stereotype.Service
 
 @Service
