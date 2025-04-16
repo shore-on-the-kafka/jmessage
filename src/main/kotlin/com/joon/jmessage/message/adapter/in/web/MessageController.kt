@@ -46,7 +46,7 @@ class MessageController(
             .collect(Collectors.toList())
     }
 
-    @GetMapping
+    @GetMapping("/new")
     fun getReceivedNewMessages(
         @RequestHeader("X-User-Id") receiverId: String
     ): List<Message> {
