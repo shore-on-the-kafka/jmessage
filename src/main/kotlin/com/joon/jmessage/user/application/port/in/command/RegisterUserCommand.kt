@@ -1,13 +1,14 @@
 package com.joon.jmessage.user.application.port.`in`.command
 
+import com.joon.jmessage.user.domain.User
+
 data class RegisterUserCommand(
-    val name: String,
-    val email: String,
-    val password: String
+    val userId: String,
+    val oauthProvider: User.OauthProvider,
+    val name: String
 ) {
     init {
+        require(userId.isNotBlank()) { "email cannot be blank" }
         require(name.isNotBlank()) { "name cannot be blank" }
-        require(email.isNotBlank()) { "email cannot be blank" }
-        require(password.isNotBlank()) { "password cannot be blank" }
     }
 }

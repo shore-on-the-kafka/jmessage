@@ -1,48 +1,37 @@
 package com.joon.jmessage.user.adapter.out.persistence
 
-import com.joon.jmessage.user.adapter.out.persistence.idgenerator.UserIdGenerator
 import com.joon.jmessage.user.application.port.out.GetUserRepository
 import com.joon.jmessage.user.application.port.out.RegisterUserRepository
 import com.joon.jmessage.user.domain.User
-import com.joon.jmessage.user.domain.UserId
+import com.joon.jmessage.user.domain.UserKey
 import jakarta.annotation.PostConstruct
-import org.springframework.security.crypto.password.PasswordEncoder
 import org.springframework.stereotype.Repository
 import java.time.Instant
 
 @Repository
 class InMemoryUserRepository(
-    private val userIdGenerator: UserIdGenerator,
-    private val passwordEncoder: PasswordEncoder
 ) : RegisterUserRepository,
     GetUserRepository
 {
-    private val users = mutableMapOf<UserId, User>()
+    private val users = mutableMapOf<UserKey, User>()
 
     @PostConstruct
     fun setUp() {
-        val userId = UserId("USER-dummy")
-        users[userId] = User(userId, "dummy", "dummy@email.com", passwordEncoder.encode("dummy"), Instant.now())
+        val userKey = UserKey.of("dummyId", User.OauthProvider.LINE)
+        users[userKey] = User(userKey, "dummy", Instant.now())
     }
 
-    override fun registerUser(name: String, email: String, password: String): UserId {
-        val userId = userIdGenerator.getNewUserId()
+    override fun registerUser(userKey: UserKey, name: String): User {
         val user = User(
-            userId = userId,
+            userKey = userKey,
             name = name,
-            email = email,
-            password = password,
-            registerdAt = Instant.now()
+            registeredAt = Instant.now()
         )
-        users[userId] = user
-        return userId
+        users[userKey] = user
+        return user
     }
 
-    override fun getUserById(userId: UserId): User? {
-        return users[userId]
-    }
-
-    override fun getUserByEmail(email: String): User? {
-        return users.values.find { it.email == email }
+    override fun getUserByUserKey(userKey: UserKey): User? {
+        return users[userKey]
     }
 }
