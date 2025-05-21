@@ -1,8 +1,8 @@
 package com.joon.jmessage.user.application.port.`in`
 
 import com.joon.jmessage.user.application.port.`in`.command.RegisterUserCommand
-import com.joon.jmessage.user.domain.UserId
+import com.joon.jmessage.user.domain.User
 
 interface RegisterUserUseCase {
-    fun registerUser(registerUserCommand: RegisterUserCommand): UserId
+    fun registerUser(registerUserCommand: RegisterUserCommand): User
 }
